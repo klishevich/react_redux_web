@@ -1,29 +1,53 @@
 import { combineReducers } from 'redux'
-import { ADD_LIST } from './actions'
+import { 
+  ADD_LIST,
+  REQUEST_LISTS,
+  RECEIVE_LISTS,
+  INVALIDATE_LISTS
+} from './actions'
 
-function lists(state = [], action) {
+function lists(state = {
+  isFetching: false,
+  didInvalidate: false,
+  items: []
+}, action) {
   switch (action.type) {
-    case ADD_LIST:
-      var t =  [
-        ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false
-        }
-      ]
-      console.log('reducers.js, function todos, case ADD_TODO', t)
-      return t
-    case TOGGLE_TODO:
-      return state.map((todo, index) => {
-        if (todo.id === action.id) {
-          return Object.assign({}, todo, {
-            completed: !todo.completed
-          })
-        }
-        return todo
+    case INVALIDATE_LISTS:
+    return Object.assign({}, state, {
+      didInvalidate: true
+    })
+    case REQUEST_LISTS:
+    return Object.assign({}, state, {
+      isFetching: true,
+      didInvalidate: false
+    })
+    case RECEIVE_LISTS:
+    return Object.assign({}, state, {
+      isFetching: false,
+      didInvalidate: false,
+      items: action.lists,
+      lastUpdated: action.receivedAt
+    })
+    default:
+    return state
+  }
+}
+
+function allPosts(state = { }, action) {
+  switch (action.type) {
+    case INVALIDATE_LISTS:
+    case RECEIVE_LISTS:
+    case REQUEST_LISTS:
+      return Object.assign({}, state, {
+        lists: lists(state.lists, action)
       })
     default:
       return state
   }
 }
+
+const rootReducer = combineReducers({
+  allPosts
+})
+
+export default rootReducer
