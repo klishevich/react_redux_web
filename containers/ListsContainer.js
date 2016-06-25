@@ -23,6 +23,9 @@ class ListsContainer extends Component {
 
   render() {
     const { lists, isFetching, lastUpdated } = this.props
+    console.log('ListsContainer.js this.props', this.props);
+    // console.log('ListsContainer.js this.state', this.state);
+    // console.log('ListsContainer.js lists', lists);
     return (
       <div>
         <h1>Lists Page</h1>
@@ -64,12 +67,13 @@ ListsContainer.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const { listsFromDB } = state
+  console.log('mapStateToProps');
+  const { allLists } = state
   const {
     isFetching,
     lastUpdated,
     items: lists
-  } = listsFromDB || {
+  } = allLists.lists || {
     isFetching: true,
     items: []
   }

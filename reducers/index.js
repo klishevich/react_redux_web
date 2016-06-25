@@ -22,6 +22,7 @@ function lists(state = {
       didInvalidate: false
     })
     case RECEIVE_LISTS:
+    // console.log('RECEIVE_LISTS', action.lists);
     return Object.assign({}, state, {
       isFetching: false,
       didInvalidate: false,

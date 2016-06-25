@@ -19,15 +19,17 @@ export function invalidateLists() {
 }
 
 function requestLists() {
+  console.log('Actions REQUEST_LISTS');
   return {
     type: REQUEST_LISTS
   }
 }
 
 function receiveLists(json) {
+  console.log('Actions RECEIVE_LISTS', json);
   return {
     type: RECEIVE_LISTS,
-    lists: json.data.children.map(child => child.data),
+    lists: json,
     receivedAt: Date.now()
   }
 }
@@ -35,14 +37,18 @@ function receiveLists(json) {
 function fetchLists() {
   return dispatch => {
     dispatch(requestLists())
-    return fetch(`http://localhost:3000/lists`)
+    return fetch('http://localhost:3000/lists', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
       .then(response => response.json())
       .then(json => dispatch(receiveLists(json)))
   }
 }
 
 function shouldFetchLists(state) {
-  const lists = state.lists
+  const lists = state.allLists.lists
   if (!lists) {
     return true
   } else if (lists.isFetching) {
