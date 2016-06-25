@@ -4,7 +4,7 @@ import {
   REQUEST_LISTS,
   RECEIVE_LISTS,
   INVALIDATE_LISTS
-} from './actions'
+} from '../actions'
 
 function lists(state = {
   isFetching: false,
@@ -33,7 +33,7 @@ function lists(state = {
   }
 }
 
-function allPosts(state = { }, action) {
+function allLists(state = { }, action) {
   switch (action.type) {
     case INVALIDATE_LISTS:
     case RECEIVE_LISTS:
@@ -47,7 +47,7 @@ function allPosts(state = { }, action) {
 }
 
 const rootReducer = combineReducers({
-  allPosts
+  allLists
 })
 
 export default rootReducer
