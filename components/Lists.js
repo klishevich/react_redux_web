@@ -5,7 +5,7 @@ export default class Lists extends Component {
     return (
       <ul>
         {this.props.lists.map((list, i) =>
-          <li key={i}>{list.name}</li>
+          <li key={i}>{list.name} (order: {list.order})</li>
         )}
       </ul>
     )

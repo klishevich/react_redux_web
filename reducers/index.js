@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
-import { 
+import {
+  EDIT_NEW_LIST, 
   ADD_LIST,
   REQUEST_LISTS,
   RECEIVE_LISTS,
@@ -47,7 +48,20 @@ function allLists(state = { }, action) {
   }
 }
 
+function newList(state = { }, action) {
+  switch (action.type) {
+    case EDIT_NEW_LIST:
+    // case ADD_LIST:
+      return Object.assign({}, state, {
+        listName: action.listName
+      })
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
+  newList,
   allLists
 })
 

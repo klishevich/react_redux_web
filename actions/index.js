@@ -1,14 +1,22 @@
 import fetch from 'isomorphic-fetch'
 
+export const EDIT_NEW_LIST = 'EDIT_NEW_LIST'
 export const ADD_LIST = 'ADD_LIST'
 export const REQUEST_LISTS = 'REQUEST_LISTS'
 export const RECEIVE_LISTS = 'RECEIVE_LISTS'
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS'
 
+export function editNewList(listName) {
+  return { 
+  	type: EDIT_NEW_LIST, 
+  	listName 
+  }
+}
+
 export function addList(listName) {
   return { 
-  	type: ADD_LIST, 
-  	listName 
+    type: ADD_LIST, 
+    listName 
   }
 }
 
