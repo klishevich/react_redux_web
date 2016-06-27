@@ -3,14 +3,30 @@ import fetch from 'isomorphic-fetch'
 export const EDIT_NEW_LIST = 'EDIT_NEW_LIST'
 export const ADD_NEW_LIST_CLICK = 'ADD_NEW_LIST_CLICK'
 export const ADD_NEW_LIST_POST = 'ADD_NEW_LIST_POST'
+export const NEW_LIST_POST = 'NEW_LIST_POST'
+export const NEW_LIST_POST_RESULT = 'NEW_LIST_POST_RESULT'
 export const REQUEST_LISTS = 'REQUEST_LISTS'
 export const RECEIVE_LISTS = 'RECEIVE_LISTS'
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS'
 
-export function editNewList(listName) {
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
+
+function parseJSON(response) {
+  return response.json()
+}
+
+export function editNewList(name) {
   return { 
   	type: EDIT_NEW_LIST, 
-  	listName 
+  	name 
   }
 }
 
@@ -21,15 +37,28 @@ export function addNewListClick() {
 }
 
 export function addNewListPost() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(newListPost())
+    // var data = new FormData();
+    const postdata = getState().newList
     return fetch('http://localhost:3000/lists', {
+      method: 'post',
       headers: {
-        'Accept': 'application/json'
-      }
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        list: postdata
+      })
     })
-      .then(response => response.json())
-      .then(json => dispatch(newListPostResult(json)))
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(data => {
+      // console.log('addNewListPost',data);
+      dispatch(newListPostResult());
+      dispatch(receiveLists(data));
+    })
+    // .catch(handleApiError);
   }
 }
 

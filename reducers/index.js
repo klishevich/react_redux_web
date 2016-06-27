@@ -4,14 +4,11 @@ import {
   ADD_NEW_LIST_CLICK,
   REQUEST_LISTS,
   RECEIVE_LISTS,
-  INVALIDATE_LISTS
+  INVALIDATE_LISTS,
+  NEW_LIST_POST_RESULT
 } from '../actions'
 
-function lists(state = {
-  isFetching: false,
-  didInvalidate: false,
-  items: []
-}, action) {
+function lists(state = { isFetching: false, didInvalidate: false, items: [] }, action) {
   switch (action.type) {
     case INVALIDATE_LISTS:
     return Object.assign({}, state, {
@@ -48,15 +45,20 @@ function allLists(state = { }, action) {
   }
 }
 
-function newList(state = { }, action) {
+function newList(state = { isAdding: false, name: ''}, action) {
   switch (action.type) {
     case EDIT_NEW_LIST:
       return Object.assign({}, state, {
-        listName: action.listName
+        name: action.name
       })
     case ADD_NEW_LIST_CLICK:
       return Object.assign({}, state, {
         isAdding: true
+      })
+    case NEW_LIST_POST_RESULT:
+      return Object.assign({}, state, {
+        isAdding: false,
+        name: ''
       })
     default:
       return state

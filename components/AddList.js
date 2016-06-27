@@ -3,24 +3,17 @@ import { addList, editNewList, addNewListClick, addNewListPost } from '../action
 import { connect } from 'react-redux'
 
 class AddList extends Component {
-  // static propTypes = {
-  //   addList: PropTypes.func.isRequired
-  // };
-
   constructor(props) {
-    super(props);
+    super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
   }
 
   handleAdd(e) {
-    // if (text.length !== 0) {
-    //   this.props.addList(text);
-    //   // dispatch(addTodo(input.value))
-    // }
     e.preventDefault()
     const { dispatch } = this.props
     dispatch(addNewListClick())
+    dispatch(addNewListPost())
   }
 
   handleChange(e) {
@@ -31,17 +24,26 @@ class AddList extends Component {
   }
 
   render() {
+    const { name, isAdding } = this.props
     console.log('AddList.js this.props', this.props);
     return (
       <div className='addList'>
         <h1>Add List</h1>
-        <input 
-          type='text' 
-          name='name' 
-          id='name' 
-          placeholder='Enter List Name' 
-          onChange={this.handleChange}/>
-        <a href="#" onClick={this.handleAdd}>Click to Add</a>
+        {isAdding &&
+          <div>New Item is Adding...</div>
+        }
+        {!isAdding &&
+          <div>
+            <input 
+              type='text' 
+              name='name' 
+              id='name'
+              value={name}
+              placeholder='Enter List Name' 
+              onChange={this.handleChange}/>
+            <a href="#" onClick={this.handleAdd}>Click to Add</a>
+          </div>
+        }
       </div>
     );
   }
@@ -49,10 +51,27 @@ class AddList extends Component {
 
 AddList.propTypes = {
   // lists: PropTypes.array.isRequired,
-  // isFetching: PropTypes.bool.isRequired,
+  isAdding: PropTypes.bool.isRequired,
   // lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired
 }
 
-AddList = connect()(AddList)
+function mapStateToProps(state) {
+  // console.log('mapStateToProps');
+  const { newList } = state
+  const {
+    isAdding,
+    name: name
+  } = newList || {
+    isAdding: false,
+    name: ''
+  }
+
+  return {
+    name,
+    isAdding
+  }
+}
+
+AddList = connect(mapStateToProps)(AddList)
 export default AddList

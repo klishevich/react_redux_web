@@ -67,7 +67,7 @@ ListsContainer.propTypes = {
 }
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps');
+  // console.log('mapStateToProps');
   const { allLists } = state
   const {
     isFetching,
