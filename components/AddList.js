@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { addList, editNewList } from '../actions'
+import { addList, editNewList, addNewListClick, addNewListPost } from '../actions'
 import { connect } from 'react-redux'
 
 class AddList extends Component {
@@ -10,24 +10,20 @@ class AddList extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this)
-
-    // this.state = {
-    //   name: this.props.name || ''
-    // };
+    this.handleAdd = this.handleAdd.bind(this)
   }
 
-  handleSave(text) {
+  handleAdd(e) {
     // if (text.length !== 0) {
     //   this.props.addList(text);
     //   // dispatch(addTodo(input.value))
     // }
     e.preventDefault()
     const { dispatch } = this.props
-    dispatch(AddList(text))
+    dispatch(addNewListClick())
   }
 
   handleChange(e) {
-    // this.setState({ name: e.target.value });
     console.log('e.target.value',e.target.value);
     e.preventDefault()
     const { dispatch } = this.props
@@ -45,6 +41,7 @@ class AddList extends Component {
           id='name' 
           placeholder='Enter List Name' 
           onChange={this.handleChange}/>
+        <a href="#" onClick={this.handleAdd}>Click to Add</a>
       </div>
     );
   }

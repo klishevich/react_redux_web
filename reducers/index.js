@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {
   EDIT_NEW_LIST, 
-  ADD_LIST,
+  ADD_NEW_LIST_CLICK,
   REQUEST_LISTS,
   RECEIVE_LISTS,
   INVALIDATE_LISTS
@@ -51,9 +51,12 @@ function allLists(state = { }, action) {
 function newList(state = { }, action) {
   switch (action.type) {
     case EDIT_NEW_LIST:
-    // case ADD_LIST:
       return Object.assign({}, state, {
         listName: action.listName
+      })
+    case ADD_NEW_LIST_CLICK:
+      return Object.assign({}, state, {
+        isAdding: true
       })
     default:
       return state
