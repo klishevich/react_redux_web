@@ -28,7 +28,7 @@ class ListsContainer extends Component {
     // console.log('ListsContainer.js lists', lists);
     return (
       <div>
-        <h1>Lists Page</h1>
+        <h1>Lists</h1>
         <p>
           {lastUpdated &&
             <span>

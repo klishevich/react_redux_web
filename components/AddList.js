@@ -35,7 +35,7 @@ class AddList extends Component {
     console.log('AddList.js this.props', this.props);
     return (
       <div className='addList'>
-        <h1>Add List 2</h1>
+        <h1>Add List</h1>
         {isAdding &&
           <div>New Item is Adding...</div>
         }
@@ -75,11 +75,12 @@ function mapStateToProps(state) {
   const { newList } = state
   const {
     isAdding,
-    newListItem: newListItem
-  } = newList || {
-    isAdding: false,
-    newListItem: { name: '', order: 0 }
-  }
+    newListItem
+  } = newList 
+  // || {
+  //   isAdding: false,
+  //   newListItem: { name: '', order: 0 }
+  // }
 
   return {
     newListItem,

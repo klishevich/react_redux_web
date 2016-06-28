@@ -45,7 +45,7 @@ function allLists(state = { }, action) {
   }
 }
 
-function newList(state = { isAdding: false, newListItem: { name: '', order: 1}}, action) {
+function newList(state = { isAdding: false, newListItem: { name: '', order: ''}}, action) {
   switch (action.type) {
     case EDIT_NEW_LIST:
       return Object.assign({}, state, {
@@ -58,7 +58,7 @@ function newList(state = { isAdding: false, newListItem: { name: '', order: 1}},
     case NEW_LIST_POST_RESULT:
       return Object.assign({}, state, {
         isAdding: false,
-        name: ''
+        newListItem: { name: '', order: 1}
       })
     default:
       return state
