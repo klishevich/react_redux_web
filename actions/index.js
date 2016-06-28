@@ -23,10 +23,10 @@ function parseJSON(response) {
   return response.json()
 }
 
-export function editNewList(name) {
+export function editNewList(newListItem) {
   return { 
   	type: EDIT_NEW_LIST, 
-  	name 
+  	newListItem 
   }
 }
 
@@ -40,7 +40,7 @@ export function addNewListPost() {
   return (dispatch, getState) => {
     dispatch(newListPost())
     // var data = new FormData();
-    const postdata = getState().newList
+    const postdata = getState().newList.newListItem
     return fetch('http://localhost:3000/lists', {
       method: 'post',
       headers: {

@@ -18,17 +18,24 @@ class AddList extends Component {
 
   handleChange(e) {
     console.log('e.target.value',e.target.value);
+    console.log('e.target.name',e.target.name);
     e.preventDefault()
+    var obj = {}
+    obj['name'] = this.props.newListItem.name
+    obj['order'] = this.props.newListItem.order
+    obj[e.target.name] = e.target.value
+
     const { dispatch } = this.props
-    dispatch(editNewList(e.target.value))
+    console.log('e.target.action',editNewList(obj));
+    dispatch(editNewList(obj))
   }
 
   render() {
-    const { name, isAdding } = this.props
+    const { newListItem, isAdding } = this.props
     console.log('AddList.js this.props', this.props);
     return (
       <div className='addList'>
-        <h1>Add List</h1>
+        <h1>Add List 2</h1>
         {isAdding &&
           <div>New Item is Adding...</div>
         }
@@ -38,8 +45,15 @@ class AddList extends Component {
               type='text' 
               name='name' 
               id='name'
-              value={name}
+              value={newListItem.name}
               placeholder='Enter List Name' 
+              onChange={this.handleChange}/>
+            <input 
+              type='text' 
+              name='order' 
+              id='order'
+              value={newListItem.order}
+              placeholder='Enter Order' 
               onChange={this.handleChange}/>
             <a href="#" onClick={this.handleAdd}>Click to Add</a>
           </div>
@@ -61,14 +75,14 @@ function mapStateToProps(state) {
   const { newList } = state
   const {
     isAdding,
-    name: name
+    newListItem: newListItem
   } = newList || {
     isAdding: false,
-    name: ''
+    newListItem: { name: '', order: 0 }
   }
 
   return {
-    name,
+    newListItem,
     isAdding
   }
 }

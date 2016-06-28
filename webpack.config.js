@@ -9,8 +9,8 @@ var config = {
     },
     entry: {
         main: [
-        'webpack-dev-server/client?http://localhost:8080',
-        'webpack/hot/only-dev-server',
+        // 'webpack-dev-server/client?http://localhost:8080',
+        // 'webpack/hot/only-dev-server',
         path.resolve(__dirname, 'index.js')
         ],
     },
