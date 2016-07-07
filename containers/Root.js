@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../configureStore'
 import ListsContainer from './ListsContainer'
-import AddList from '../components/AddList'
+import AddListContainer from './AddListContainer'
 
 const store = configureStore()
 
@@ -11,7 +11,7 @@ export default class Root extends Component {
     return (
       <Provider store={store}>
       	<div>
-	      	<AddList />
+	      	<AddListContainer />
     	    <ListsContainer />
     	</div>
       </Provider>

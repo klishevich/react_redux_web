@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { addList, editNewList, addNewListClick, addNewListPost } from '../actions'
 import { connect } from 'react-redux'
 
-class AddList extends Component {
+class AddListContainer extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -32,10 +32,10 @@ class AddList extends Component {
 
   render() {
     const { newListItem, isAdding } = this.props
-    console.log('AddList.js this.props', this.props);
+    console.log('AddListContainer.js this.props', this.props);
     return (
-      <div className='addList'>
-        <h1>Add List</h1>
+      <div className='AddListContainer'>
+        <h1>Add List 23</h1>
         {isAdding &&
           <div>New Item is Adding...</div>
         }
@@ -63,7 +63,7 @@ class AddList extends Component {
   }
 }
 
-AddList.propTypes = {
+AddListContainer.propTypes = {
   // lists: PropTypes.array.isRequired,
   isAdding: PropTypes.bool.isRequired,
   // lastUpdated: PropTypes.number,
@@ -88,5 +88,5 @@ function mapStateToProps(state) {
   }
 }
 
-AddList = connect(mapStateToProps)(AddList)
-export default AddList
+AddListContainer = connect(mapStateToProps)(AddListContainer)
+export default AddListContainer
