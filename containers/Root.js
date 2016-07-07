@@ -10,10 +10,10 @@ export default class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-      	<div>
+      	<div className="container">
 	      	<AddListContainer />
     	    <ListsContainer />
-    	</div>
+    	 </div>
       </Provider>
     )
   }

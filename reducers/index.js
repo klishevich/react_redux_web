@@ -45,7 +45,7 @@ function allLists(state = { }, action) {
   }
 }
 
-function newList(state = { isAdding: false, newListItem: { name: '', order: ''}}, action) {
+function newList(state = { isAdding: false, newListItem: { name: '', order: '1'}}, action) {
   switch (action.type) {
     case EDIT_NEW_LIST:
       return Object.assign({}, state, {

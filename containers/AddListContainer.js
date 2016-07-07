@@ -35,27 +35,37 @@ class AddListContainer extends Component {
     console.log('AddListContainer.js this.props', this.props);
     return (
       <div className='AddListContainer'>
-        <h1>Add List 23</h1>
+        <h1>Add List</h1>
         {isAdding &&
           <div>New Item is Adding...</div>
         }
         {!isAdding &&
-          <div>
-            <input 
-              type='text' 
-              name='name' 
-              id='name'
-              value={newListItem.name}
-              placeholder='Enter List Name' 
-              onChange={this.handleChange}/>
-            <input 
-              type='text' 
-              name='order' 
-              id='order'
-              value={newListItem.order}
-              placeholder='Enter Order' 
-              onChange={this.handleChange}/>
-            <a href="#" onClick={this.handleAdd}>Click to Add</a>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="form-group">
+                <label>List Name</label>
+                <input
+                  className="form-control" 
+                  type='text' 
+                  name='name' 
+                  id='name'
+                  value={newListItem.name}
+                  placeholder='Enter List Name' 
+                  onChange={this.handleChange}/>
+              </div>
+              <div className="form-group">
+                <label>Order</label>
+                <input 
+                  className="form-control" 
+                  type='text' 
+                  name='order' 
+                  id='order'
+                  value={newListItem.order}
+                  placeholder='Enter Order' 
+                  onChange={this.handleChange}/>
+                </div>
+              <a href="#" className="btn btn-primary" onClick={this.handleAdd}>Click to Add</a>
+            </div>
           </div>
         }
       </div>

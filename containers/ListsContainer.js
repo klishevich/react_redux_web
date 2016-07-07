@@ -23,7 +23,7 @@ class ListsContainer extends Component {
 
   render() {
     const { lists, isFetching, lastUpdated } = this.props
-    console.log('ListsContainer.js this.props', this.props);
+    // console.log('ListsContainer.js this.props', this.props);
     // console.log('ListsContainer.js this.state', this.state);
     // console.log('ListsContainer.js lists', lists);
     return (
@@ -37,7 +37,7 @@ class ListsContainer extends Component {
             </span>
           }
           {!isFetching &&
-            <a href='#'
+            <a href='#' className="btn btn-info"
                onClick={this.handleRefreshClick}>
               Refresh
             </a>
