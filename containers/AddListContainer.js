@@ -86,11 +86,7 @@ function mapStateToProps(state) {
   const {
     isAdding,
     newListItem
-  } = newList 
-  // || {
-  //   isAdding: false,
-  //   newListItem: { name: '', order: 0 }
-  // }
+  } = newList
 
   return {
     newListItem,

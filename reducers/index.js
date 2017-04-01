@@ -5,7 +5,8 @@ import {
   REQUEST_LISTS,
   RECEIVE_LISTS,
   INVALIDATE_LISTS,
-  NEW_LIST_POST_RESULT
+  NEW_LIST_POST_RESULT,
+  EDIT_SIGN_UP_FORM
 } from '../actions'
 
 function lists(state = { isFetching: false, didInvalidate: false, items: [] }, action) {
@@ -65,9 +66,19 @@ function newList(state = { isAdding: false, newListItem: { name: '', order: '1'}
   }
 }
 
+function signUpForm(state = { }, action) {
+  switch (action.type) {
+    case EDIT_SIGN_UP_FORM:
+      return Object.assign({}, state, action.signUpFormItem)
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   newList,
-  allLists
+  allLists,
+  signUpForm
 })
 
 export default rootReducer

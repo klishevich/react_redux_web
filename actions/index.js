@@ -8,6 +8,7 @@ export const NEW_LIST_POST_RESULT = 'NEW_LIST_POST_RESULT'
 export const REQUEST_LISTS = 'REQUEST_LISTS'
 export const RECEIVE_LISTS = 'RECEIVE_LISTS'
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS'
+export const EDIT_SIGN_UP_FORM = 'EDIT_SIGN_UP_FORM'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -126,5 +127,14 @@ export function fetchListsIfNeeded() {
     if (shouldFetchLists(getState())) {
       return dispatch(fetchLists())
     }
+  }
+}
+
+// Axios Testing Muninn Huginn
+
+export function editSignUpForm(signUpFormItem) {
+  return { 
+    type: EDIT_SIGN_UP_FORM, 
+    signUpFormItem 
   }
 }
