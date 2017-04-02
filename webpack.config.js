@@ -19,6 +19,7 @@ module.exports  = {
             './index.js'
         ],
         page_task_templates: [
+            'react-hot-loader/patch',
             'webpack-dev-server/client?' + publicPath,
             'webpack/hot/only-dev-server',
             './page_task_templates.js'
@@ -27,7 +28,7 @@ module.exports  = {
     output: {
         filename: "[name].bundle.js",
         path: path.join(__dirname, 'build'),
-        publicPath: "/",
+        // publicPath: publicPath + "/",
     },
     module: {
         loaders: [{

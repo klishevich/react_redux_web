@@ -98,9 +98,10 @@ class TestAxiosContainer extends Component {
     return (
       <div className='TestAxiosContainer'>
         <h1>Testing Muninn Authentication!</h1>
+        <a href='/task_templates.html'>List Task Templates Page!</a>
         <div className="row">
           <div className="col-md-4">
-            <h2>Sign Up</h2>
+            <h2>Sign Up!</h2>
             <input
               className="form-control" 
               type='text' 
