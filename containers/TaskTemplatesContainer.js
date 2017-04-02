@@ -11,8 +11,8 @@ class TaskTemplatesContainer extends Component {
     console.log('TaskTemplatesContainer.js this.props', this.props);
     return (
       <div className='TaskTemplatesContainer'>
-        <h1>TaskTemplatesContainer!!!!</h1>
-        <a href='/'>Login Page</a>
+        <h1>Another Page</h1>
+        <a href='/'>Home Page</a>
       </div>
     );
   }

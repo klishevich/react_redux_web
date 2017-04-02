@@ -7,7 +7,10 @@ import {
   INVALIDATE_LISTS,
   NEW_LIST_POST_RESULT,
   EDIT_SIGN_UP_FORM,
-  EDIT_SIGN_IN_FORM
+  EDIT_SIGN_IN_FORM,
+  SIGN_IN_POST,
+  SIGN_IN_SUCCESS,
+  SIGN_IN_ERROR,
 } from '../actions'
 
 function lists(state = { isFetching: false, didInvalidate: false, items: [] }, action) {
@@ -80,6 +83,10 @@ function signInForm(state = { login: 'test601@test.com'}, action) {
   switch (action.type) {
     case EDIT_SIGN_IN_FORM:
       return Object.assign({}, state, action.signInFormItem)
+    case SIGN_IN_SUCCESS:
+      return Object.assign({}, state, { headers: action.headers })
+    case SIGN_IN_ERROR:
+      return Object.assign({}, state, { errors: action.errors })
     default:
       return state
   }

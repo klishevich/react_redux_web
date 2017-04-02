@@ -1,15 +1,21 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch';
+import { url } from '../constants';
+import axios from 'axios'; 
 
-export const EDIT_NEW_LIST = 'EDIT_NEW_LIST'
-export const ADD_NEW_LIST_CLICK = 'ADD_NEW_LIST_CLICK'
-export const ADD_NEW_LIST_POST = 'ADD_NEW_LIST_POST'
-export const NEW_LIST_POST = 'NEW_LIST_POST'
-export const NEW_LIST_POST_RESULT = 'NEW_LIST_POST_RESULT'
-export const REQUEST_LISTS = 'REQUEST_LISTS'
-export const RECEIVE_LISTS = 'RECEIVE_LISTS'
-export const INVALIDATE_LISTS = 'INVALIDATE_LISTS'
-export const EDIT_SIGN_UP_FORM = 'EDIT_SIGN_UP_FORM'
-export const EDIT_SIGN_IN_FORM = 'EDIT_SIGN_IN_FORM'
+export const EDIT_NEW_LIST = 'EDIT_NEW_LIST';
+export const ADD_NEW_LIST_CLICK = 'ADD_NEW_LIST_CLICK';
+export const ADD_NEW_LIST_POST = 'ADD_NEW_LIST_POST';
+export const NEW_LIST_POST = 'NEW_LIST_POST';
+export const NEW_LIST_POST_RESULT = 'NEW_LIST_POST_RESULT';
+export const REQUEST_LISTS = 'REQUEST_LISTS';
+export const RECEIVE_LISTS = 'RECEIVE_LISTS';
+export const INVALIDATE_LISTS = 'INVALIDATE_LISTS';
+export const EDIT_SIGN_UP_FORM = 'EDIT_SIGN_UP_FORM';
+export const EDIT_SIGN_IN_FORM = 'EDIT_SIGN_IN_FORM';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_IN_POST = 'SIGN_IN_POST';
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const SIGN_IN_ERROR = 'SIGN_IN_ERROR';
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -144,5 +150,45 @@ export function editSignInForm(signInFormItem) {
   return { 
     type: EDIT_SIGN_IN_FORM, 
     signInFormItem 
+  }
+}
+
+export function signIn() {
+  return (dispatch, getState) => {
+    dispatch(signInPost());
+    axios.post(url + '/auth/sign_in', {
+      email: getState().signInForm.login,
+      password: 'testtest',
+    })
+    .then( res => {
+      // console.log('SUCCESS res', res);
+      // console.log('res.headers', res.headers);
+      dispatch(signInSuccess(res.headers));
+    })
+    .catch( err => {
+      // console.log('ERROR err.response', err.response);
+      // console.log('err.response.data.errors.full_messages', err.response.data.errors.full_messages);
+      dispatch(signInError(err.response.data.errors));
+    });
+  }
+}
+
+function signInPost() {
+  return {
+    type: SIGN_IN_POST
+  }
+}
+
+function signInSuccess(headers) {
+  return {
+    type: SIGN_IN_SUCCESS,
+    headers
+  }
+}
+
+function signInError(errors) {
+  return {
+    type: SIGN_IN_ERROR,
+    errors
   }
 }
