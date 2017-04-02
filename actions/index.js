@@ -9,6 +9,7 @@ export const REQUEST_LISTS = 'REQUEST_LISTS'
 export const RECEIVE_LISTS = 'RECEIVE_LISTS'
 export const INVALIDATE_LISTS = 'INVALIDATE_LISTS'
 export const EDIT_SIGN_UP_FORM = 'EDIT_SIGN_UP_FORM'
+export const EDIT_SIGN_IN_FORM = 'EDIT_SIGN_IN_FORM'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -136,5 +137,12 @@ export function editSignUpForm(signUpFormItem) {
   return { 
     type: EDIT_SIGN_UP_FORM, 
     signUpFormItem 
+  }
+}
+
+export function editSignInForm(signInFormItem) {
+  return { 
+    type: EDIT_SIGN_IN_FORM, 
+    signInFormItem 
   }
 }

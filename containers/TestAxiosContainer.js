@@ -1,23 +1,19 @@
 import React, { PropTypes, Component } from 'react';
-import { editSignUpForm } from '../actions'
+import { editSignUpForm, editSignInForm } from '../actions'
 import { connect } from 'react-redux';
 import axios from 'axios';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 import Auth from 'j-toker';
 Auth.configure({apiUrl: 'http://localhost:3001/api/v1'});
-// Auth = require('j-toker');
-// import { Auth } from 'j-tokers';
-// var Auth = require('../../node_modules/j-toker/src/j-toker.js');
 
 class TestAxiosContainer extends Component {
   constructor(props) {
     super(props);
     this.handleMakeAuth = this.handleMakeAuth.bind(this);
     this.handleMakeAuth2 = this.handleMakeAuth2.bind(this);
-    this.handleLoginChange = this.handleLoginChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
-    this.handleCheckSignIn = this.handleCheckSignIn.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   handleMakeAuth(e) {
@@ -65,19 +61,10 @@ class TestAxiosContainer extends Component {
     })
   }
 
-  handleLoginChange(e) {
-    console.log('e.target.value',e.target.value);
-    let signUpFormItem = {};
-    signUpFormItem['login'] = e.target.value;
-    const { dispatch } = this.props;
-    console.log('e.target.action', editSignUpForm(signUpFormItem));
-    dispatch(editSignUpForm(signUpFormItem));
-  }
-
   handleSignUp() {
     console.log('handleSignUp');
     Auth.emailSignUp({
-      email: this.props.login,
+      email: this.props.signUpForm.login,
       password: 'testtest',
       password_confirmation: 'testtest'
     })
@@ -86,47 +73,70 @@ class TestAxiosContainer extends Component {
     })
     .fail(res => {
       console.log('handleSignUp fail',res);
+      console.log('handleSignUp fail error',res.data.errors.full_messages);
     })
   }
 
-  handleCheckSignIn() {
-    console.log('handleCheckSignIn');
+  handleSignIn() {
+    console.log('handleSignIn');
+    Auth.emailSignIn({
+      email: this.props.signInForm.login,
+      password: 'testtest'
+    })
+    .then(res => {
+      console.log('handleSignIn then',res);
+    })
+    .fail(res => {
+      console.log('handleSignIn fail',res);
+      console.log('handleSignIn fail error',res.data.errors.full_messages);
+    })
   }
 
   render() {
     console.log('TestAxiosContainer.js this.props', this.props);
-    const { login } = this.props
+    const { signUpForm, signInForm } = this.props
     return (
       <div className='TestAxiosContainer'>
-        <h1>Testing Muninn Authentication</h1>
+        <h1>Testing Muninn Authentication!</h1>
         <div className="row">
-          <h2>Sign Up</h2>
-          <div>Password is testtest</div>
           <div className="col-md-4">
+            <h2>Sign Up</h2>
             <input
               className="form-control" 
               type='text' 
               name='login' 
               id='login'
-              value={login}
+              value={signUpForm.login}
               placeholder='Enter Login' 
-              onChange={this.handleLoginChange}/>
+              onChange={(e)=>this.props.dispatch(editSignUpForm({'login': e.target.value}))}/>
             <button className="btn btn-primary" onClick={this.handleSignUp}>Sign Up</button>
+            <div>Password is testtest</div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-4">
-            <h2>Sign In</h2>
-            <button className="btn btn-primary" onClick={this.handleCheckSignIn}>Check Sign In?</button>
+            <h2>Sign In!!!!</h2>
+            <input
+              className="form-control" 
+              type='text' 
+              name='login' 
+              id='login'
+              value={signInForm.login}
+              placeholder='Enter Login' 
+              onChange={(e)=>this.props.dispatch(editSignInForm({'login': e.target.value}))}/>
+            <button className="btn btn-primary" onClick={this.handleSignIn}>Check Sign In?</button>
+            <div>Password is testtest</div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-4">
+            <h2>Click to Test Axios</h2>
             <a href="#" className="btn btn-primary" onClick={this.handleMakeAuth}>Click to Test Axios</a>
           </div>
         </div>
         <div className="row">
           <div className="col-md-4">
+            <h2>Click to Test Fetch</h2>
             <a href="#" className="btn btn-primary" onClick={this.handleMakeAuth2}>Click to Test Fetch</a>
           </div>
         </div>
@@ -136,15 +146,18 @@ class TestAxiosContainer extends Component {
 }
 
 TestAxiosContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  signUpForm: PropTypes.object.isRequired,
+  signInForm: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
-  const { signUpForm } = state;
-  let { login } = signUpForm;
-  login = (typeof(login) === 'undefined') ? 'test601@test.com' : login;
+  const { signUpForm, signInForm } = state;
+  // let { login } = signUpForm;
+  // login = (typeof(login) === 'undefined') ? 'test601@test.com' : login;
   return {
-    login
+    signUpForm,
+    signInForm
   }
 }
 

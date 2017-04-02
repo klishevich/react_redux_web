@@ -1,2 +1,4 @@
 /node_modules
 /build/bundle.js
+/build/root.bundle.js
+/build/page_task_templates.bundle.js

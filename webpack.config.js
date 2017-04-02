@@ -1,37 +1,57 @@
 // start dev server
 // webpack-dev-server --hot
+var publicPath = 'http://localhost:4000';
+const webpack = require('webpack');
+
 var path = require('path');
-var config = {
+module.exports  = {
     devServer: {
         contentBase: './build',
         host: 'localhost',
-        port: 8080
+        port: 4000,
+        hot: true,
     },
     entry: {
-        main: [
-        // 'webpack-dev-server/client?http://localhost:8080',
-        // 'webpack/hot/only-dev-server',
-        path.resolve(__dirname, 'index.js')
+        root: [
+            'react-hot-loader/patch',
+            'webpack-dev-server/client?' + publicPath,
+            'webpack/hot/only-dev-server',
+            './index.js'
+        ],
+        page_task_templates: [
+            'webpack-dev-server/client?' + publicPath,
+            'webpack/hot/only-dev-server',
+            './page_task_templates.js'
         ],
     },
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: "[name].bundle.js",
+        path: path.join(__dirname, 'build'),
+        publicPath: "/",
     },
     module: {
         loaders: [{
-            test: /\.jsx?$/,
-            loader: 'babel',
-            query: {
-              presets: [
-                'babel-preset-es2015',
-                'babel-preset-react',
-                'babel-preset-stage-0'
-              ].map(require.resolve),
-            }
-        }]
+            test: /\.js$/, 
+            loader: 'babel-loader', 
+            exclude: /node_modules/
+        }],
+        rules: [
+            {
+                test: /\.jsx?$/,
+                use: [ 'babel-loader', ],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader?modules', 'postcss-loader', ],
+            },
+        ],
     },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        // enable HMR globally
 
+        new webpack.NamedModulesPlugin(),
+        // prints more readable module names in the browser console on HMR updates
+    ],
 };
-
-module.exports = config;
