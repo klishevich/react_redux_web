@@ -12,7 +12,7 @@ class TaskTemplatesContainer extends Component {
     return (
       <div className='TaskTemplatesContainer'>
         <h1>TaskTemplatesContainer!!!!</h1>
-        <a href='/'>Login Page Page!</a>
+        <a href='/'>Login Page</a>
       </div>
     );
   }

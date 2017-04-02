@@ -10,43 +10,36 @@ Auth.configure({apiUrl: 'http://localhost:3001/api/v1'});
 class TestAxiosContainer extends Component {
   constructor(props) {
     super(props);
-    this.handleMakeAuth = this.handleMakeAuth.bind(this);
-    this.handleMakeAuth2 = this.handleMakeAuth2.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    // this.handleValidateToken = this.handleValidateToken(this);
+    // this.handleMakeAuth = this.handleMakeAuth.bind(this);
+    // this.handleMakeAuth2 = this.handleMakeAuth2.bind(this);
   }
 
-  handleMakeAuth(e) {
-    e.preventDefault();
-    console.log('handleMakeAuth clicked');
-    axios.post('http://localhost:3001/api/v1/auth', {
-      headers: {
-        'Access-Control-Expose-Headers': 'Access-Token, Client, Uid, uid'
-      },
-      email: 'test112@test.com',
+  handleTestAxiosSignIn(e) {
+    console.log('handleTestAxiosSignIn');
+    axios.post('http://localhost:3001/api/v1/auth/sign_in', {
+      email: 'test601@test.com',
       password: 'testtest',
-      password_confirmation: 'testtest', 
     })
-    .then(function (response) {
-        console.log('anchor function (response)');
-        console.log('response', response);
-        console.log('response.headers', response.headers);
+    .then( res => {
+        console.log('success res', res);
+        console.log('res.headers', res.headers);
     })
-    .catch(function (error) {
-        console.log('anchor function (error)');
-        console.log('response error.response', error.response);
-        console.log('response error full_messages', error.response.data.errors.full_messages);
+    .catch( err => {
+        console.log('fail err.response', err.response);
+        console.log('err error full_messages', err.response.data.errors.full_messages);
     });
   }
 
-  handleMakeAuth2(e) {
-    e.preventDefault();
+  handleTestFetchSignIn(e) {
+    console.log('handleTestFetchSignIn');
     const postdata = {
-      email: 'test303@test.com',
+      email: 'test601@test.com',
       password: 'testtest',
-      password_confirmation: 'testtest', 
     }
-    fetch('http://localhost:3001/api/v1/auth', {
+    fetch('http://localhost:3001/api/v1/auth/sign_in', {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -55,10 +48,14 @@ class TestAxiosContainer extends Component {
       },
       body: JSON.stringify(postdata)
     })
-    .then(data => {
-      console.log('handleMakeAuth2',data);
-      console.log('handleMakeAuth2 headers',data.headers);
+    .then(res => {
+      console.log('success res',res);
+      console.log('res.headers',res.headers);
     })
+    .catch( err => {
+        console.log('fail err.response', err.response);
+        console.log('err error full_messages', err.response.data.errors.full_messages);
+    });
   }
 
   handleSignUp() {
@@ -69,7 +66,7 @@ class TestAxiosContainer extends Component {
       password_confirmation: 'testtest'
     })
     .then(res => {
-      console.log('handleSignUp then',res);
+      console.log('handleSignUp success',res);
     })
     .fail(res => {
       console.log('handleSignUp fail',res);
@@ -84,12 +81,53 @@ class TestAxiosContainer extends Component {
       password: 'testtest'
     })
     .then(res => {
-      console.log('handleSignIn then',res);
+      console.log('handleSignIn success',res);
+      console.log('handleSignUp Auth.user',Auth.user);
     })
+    // .then(()=> {
+    //   this.handleValidateToken();
+    // })
     .fail(res => {
       console.log('handleSignIn fail',res);
       console.log('handleSignIn fail error',res.data.errors.full_messages);
+    });
+  }
+
+  handleSignOut() {
+    Auth.signOut();
+  }
+
+  handleValidateToken() {
+    console.log('handleValidateToken');
+    Auth.validateToken()
+      .then( res => {
+        console.log('handleValidateToken success',res);
+      })
+      .fail(res => {
+      console.log('handleValidateToken fail',res);
     })
+  }
+
+  handleGetTasks() {
+    console.log('handleGetTasks');
+    axios.get('http://localhost:3001/api/v1/tasks')
+    .then( res => {
+        console.log('success res', res);
+    })
+    .catch( err => {
+        console.log('fail err', err);
+    });
+  }
+
+  handleGetTaskTemplates() {
+    console.log('handleGetTaskTemplates');
+    axios.get('http://localhost:3001/api/v1/task_templates')
+    .then( res => {
+        console.log('success res', res);
+    })
+    .catch( err => {
+        console.log('fail err', err.response);
+    });
   }
 
   render() {
@@ -101,7 +139,7 @@ class TestAxiosContainer extends Component {
         <a href='/task_templates.html'>List Task Templates Page!</a>
         <div className="row">
           <div className="col-md-4">
-            <h2>Sign Up!</h2>
+            <h2>Sign Up</h2>
             <input
               className="form-control" 
               type='text' 
@@ -116,7 +154,7 @@ class TestAxiosContainer extends Component {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <h2>Sign In!!!!</h2>
+            <h2>Sign In</h2>
             <input
               className="form-control" 
               type='text' 
@@ -131,14 +169,32 @@ class TestAxiosContainer extends Component {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <h2>Click to Test Axios</h2>
-            <a href="#" className="btn btn-primary" onClick={this.handleMakeAuth}>Click to Test Axios</a>
+            <h2>Get Tasks</h2>
+            <button className="btn btn-primary" onClick={this.handleGetTasks}>Get Tasks</button>
+          </div>
+          <div className="col-md-4">
+            <h2>Get Task Templates</h2>
+            <button className="btn btn-primary" onClick={this.handleGetTaskTemplates}>Get TaskTemplates</button>
+          </div>
+          <div className="col-md-4">
+            <h2>Validate Token</h2>
+            <button className="btn btn-primary" onClick={this.handleValidateToken}>Validate Token</button>
+          </div>
+          <div className="col-md-4">
+            <h2>Sign Out</h2>
+            <button className="btn btn-primary" onClick={this.handleSignOut}>Sign Out</button>
           </div>
         </div>
         <div className="row">
           <div className="col-md-4">
-            <h2>Click to Test Fetch</h2>
-            <a href="#" className="btn btn-primary" onClick={this.handleMakeAuth2}>Click to Test Fetch</a>
+            <h2>Click to Test Axios Sign In</h2>
+            <button className="btn btn-primary" onClick={this.handleTestAxiosSignIn}>Test Axios Sign In</button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <h2>Click to Test Fetch Sign In</h2>
+            <button className="btn btn-primary" onClick={this.handleTestFetchSignIn}>Test Fetch Sign In</button>
           </div>
         </div>
       </div>
